@@ -26,10 +26,31 @@ namespace MathGame
         {
             List<ICalcOperations> calcOperationsInterface = new List<ICalcOperations>();
             calcOperationsInterface.Add(new AdditionOperation());
+            calcOperationsInterface.Add(new SubstracionOperation());
+            calcOperationsInterface.Add(new MultiplicationOperation());
+            calcOperationsInterface.Add(new DivisionOperation());
 
             return calcOperationsInterface[i];
         }
 
-        
+        public double askUserInput()
+        {
+            Console.WriteLine("Please provide an answer:\n");
+            double userInput = double.Parse(Console.ReadLine()); //fix this
+            return userInput;
+        }
+
+        public void correctAnswerMsg(double userInput)
+        {
+            Console.WriteLine($"\nCongratulations {userInput} is the correct answer!\n");
+            messageLines();
+        }
+
+        public void incorrectAnswerMsg(double userInput, double correctAnswer)
+        {
+            Console.WriteLine($"\nUnfortunately {userInput} is not the correct answer :(");
+            Console.WriteLine($"The correct answer is {correctAnswer}");
+            messageLines();
+        }
     }
 }

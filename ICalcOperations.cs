@@ -8,12 +8,9 @@ namespace MathGame
 {
     internal interface ICalcOperations
     {
-        
         public double mathOperation();
         public void showTaskToUser();
-        public void userAnswerValidation();
-
-
-
+        public void userAnswerValidation(double correctAnswer, double userInput);
+        public int getPoints();
     }
 }

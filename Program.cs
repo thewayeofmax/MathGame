@@ -1,18 +1,26 @@
-﻿namespace MathGame
+﻿using System;
+
+namespace MathGame
 {
     internal class Program
     {
         static void Main(string[] args)
         {
-            //ListOfOperations showList = new ListOfOperations();
-            //showList.showOperations();
 
-               Menu menu = new Menu();
-               User user = new User();
+            Menu menu = new Menu();
+            User user = new User();
+            GamesHistory history = new GamesHistory();
+            GameStatus status = new GameStatus();
 
             user.userLogin();
-            menu.showOperations();
-            menu.userChoiceAction();
+            status.startGame();
+            while (status.statusOfGame() != false)
+            {
+                menu.showOperations();
+                (bool, int) data = menu.inputValidation(menu.getOperation());
+                menu.userChoiceAction(data);
+            }
         }
+
     }
 }

@@ -8,13 +8,19 @@ namespace MathGame
 {
     internal class GamesHistory
     {
-        private List<Tuple<User, int, DateTime>> historyGames = new List<Tuple<User, int, DateTime>>();
+        private List<Tuple<int, DateTime>> historyGames = new List<Tuple<int, DateTime>>();
 
-        public void addGame(User user, int points, DateTime date) => historyGames.Add(Tuple.Create(user, points, date));
+        public void addGame(int points, DateTime date) => historyGames.Add(Tuple.Create(points, date));
 
-        public List<Tuple<User, int, DateTime>> getHistoryList() => historyGames;
-        
-            
+        public List<Tuple<int, DateTime>> getHistoryList() => historyGames;
+
+        public void getHistory()
+        {
+            foreach (Tuple<int, DateTime> his in historyGames)
+            {
+                Console.WriteLine(his);
+            }
+        }
         
     }
 }

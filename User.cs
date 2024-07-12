@@ -15,8 +15,10 @@ namespace MathGame
 
         public void userLogin()
         {
-            Console.WriteLine("Please state your name: ");
+            
+            Console.Write("Please state your name: ");
             string username = Console.ReadLine();
+            Console.Clear();
 
             if (username == "")
             {

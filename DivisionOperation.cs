@@ -1,20 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace MathGame
 {
-    public class AdditionOperation : ICalcOperations
+    internal class DivisionOperation : ICalcOperations
     {
-
         private double a;
         private double b;
         public int points;
 
-        public AdditionOperation()
+        public DivisionOperation()
         {
             points = 0;
         }
@@ -24,14 +22,14 @@ namespace MathGame
 
         public double mathOperation()
         {
-            return a + b;
+            return a / b;
         }
 
         public void showTaskToUser()
         {
-            a = random.Next(0, 100);
-            b = random.Next(0, 100);
-            Console.WriteLine($"\nHow much is: {a} + {b}?");
+            a = random.Next(0, 10);
+            b = random.Next(0, 10);
+            Console.WriteLine($"\nHow much is: {a} / {b}?");
         }
 
         public void userAnswerValidation(double correctAnswer, double userInput)
@@ -46,7 +44,7 @@ namespace MathGame
             {
                 Utilities.incorrectAnswerMsg(userInput, correctAnswer);
             }
-            
+
         }
         public int getPoints()
         {

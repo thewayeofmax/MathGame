@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace MathGame
@@ -9,7 +10,7 @@ namespace MathGame
     internal class Menu
     {
         private List<string> operationsList = new List<string>();
-        private int choosenOperation;
+        
         public Menu() 
         {
             operationsList.Add("Addition");
@@ -21,6 +22,8 @@ namespace MathGame
         }
 
         Utils Utilities = new Utils();
+        GamesHistory History = new GamesHistory();
+        GameStatus Status = new GameStatus();
         
         public void showOperations()
         {
@@ -30,36 +33,57 @@ namespace MathGame
                 Console.WriteLine($"{i} --> {operationsList[i - 1]}\n");
             Utilities.messageLines();
         }
-
-        public int getOperation()
+        public string getOperation()
         {
             Console.Write("Your choice: ");
-            int userChoosed = Int32.Parse(Console.ReadLine());
+            string userChoosed = Console.ReadLine();
             Utilities.messageLines();
             return userChoosed;
         }
-
-        public bool inputValidation(int inputToCheck)
+        public (bool, int) inputValidation(string inputToCheck)
         {
-            if (inputToCheck > 0 && inputToCheck < operationsList.Count())
-                return true;
-            return false;
+            Regex regexIsNumber17 = new Regex("^[1-6]+$");
+            if (regexIsNumber17.IsMatch(inputToCheck))
+            {
+                return (true , Int32.Parse(inputToCheck));
+            }
+            else
+            {
+                Console.WriteLine("Wrong input! Please state number between 1-6.");
+                return (false, -1);
+            }
         }
 
-        public void userChoiceAction()
+        public void userChoiceAction((bool isValid, int userChoice) data)
         {
-            
-            int userChoice = getOperation();
-            if (inputValidation(userChoice) == true)
+            Console.Clear();
+            if (data.isValid == true)
             {
-                ICalcOperations doOperation = Utilities.getClassInterface(userChoice - 1);
-
-                for (int i = 0; i < 9; i++)
+                if (data.userChoice == 5)
                 {
-                    doOperation.showTaskToUser();
-                    doOperation.userAnswerValidation();
+                    History.getHistory();
+                }
+                else if (data.userChoice == 6)
+                {
+                    Status.stopGame();
+                    Environment.Exit(0);
+                }
+                else if (data.userChoice >= 0 && data.userChoice < 7)
+                {
+                    Console.Clear();
+                    DateTime date = DateTime.UtcNow;
+                    ICalcOperations doOperation = Utilities.getClassInterface(data.userChoice - 1);
+
+                    for (int i = 0; i < 2; i++)
+                    {
+                        doOperation.showTaskToUser();
+                        doOperation.userAnswerValidation(doOperation.mathOperation(), Utilities.askUserInput());
+                    }
+                    History.addGame(doOperation.getPoints(), date);
+                    Console.Clear();
                 }
             }
+            
         }
     }
 }
